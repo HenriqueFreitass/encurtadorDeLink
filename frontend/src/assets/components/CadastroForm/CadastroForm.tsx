@@ -1,25 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CadastroForm.css";
+import axios from "axios";
 
 function CadastroForm() {
+
+  const [formData, setFormData] = useState({
+    Email: "",
+    Password: "",
+    Name: "",
+  });
+
+  // Função para atualizar o estado quando os campos do formulário mudam
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Impede o comportamento padrão do formulário
+  
+    try {
+      // Faz a requisição HTTP POST para o backend
+      const response = await axios.post("http://localhost:8080/users/", formData);
+  
+      // Lida com a resposta do backend
+      if (response.status === 200) {
+        console.log("Resposta do servidor:", response.data);
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  };
+
   return (
     <div className="mt-4 p-4 bg-gray-100 rounded">
       <h2 className="text-lg font-semibold">Cadastrar</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="Name"
+          placeholder="Nome"
+          className="block w-full p-2 mt-2 border rounded"
+          value={formData.Name}
+          onChange={handleInputChange}
+          required
+        />
         <input
           type="email"
+          name="Email"
           placeholder="Email"
           className="block w-full p-2 mt-2 border rounded"
+          value={formData.Email}
+          onChange={handleInputChange}
+          required
         />
         <input
           type="password"
+          name="Password"
           placeholder="Senha"
           className="block w-full p-2 mt-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Confirmar Senha"
-          className="block w-full p-2 mt-2 border rounded"
+          value={formData.Password}
+          onChange={handleInputChange}
+          required
         />
         <button
           type="submit"

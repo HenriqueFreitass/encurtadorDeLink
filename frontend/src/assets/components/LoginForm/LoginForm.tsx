@@ -6,6 +6,11 @@ function LoginForm() {
     <div className="mt-4 p-4 bg-gray-100 rounded">
       <h2 className="text-lg font-semibold">Login</h2>
       <form>
+      <input
+          type="text"
+          placeholder="Nome"
+          className="block w-full p-2 mt-2 border rounded"
+        />
         <input
           type="email"
           placeholder="Email"
