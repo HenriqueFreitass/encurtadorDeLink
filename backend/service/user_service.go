@@ -13,6 +13,6 @@ func NewUserRepository(userRepo *repository.UserRepository) *UserService {
 	return &UserService{userRepo: userRepo}
 }
 
-func (s *UserService) GetUserProfile(userID int) (*models.User, error) {
+func (s *UserService) GetUserProfile(userID int) (*models.Users, error) {
 	return s.userRepo.GetUserByID(userID)
 }

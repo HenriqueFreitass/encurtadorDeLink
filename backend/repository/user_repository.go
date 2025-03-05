@@ -13,11 +13,11 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 	return &UserRepository{db: db}
 }
 
-func (r *UserRepository) GetUserByID(id int) (*models.User, error) {
+func (r *UserRepository) GetUserByID(id int) (*models.Users, error) {
 
-	user := &models.User{}
+	user := &models.Users{}
 	err := r.db.QueryRow("Select id, name, email, password FROM users WHERE id = ?", id).Scan(
-		&user.Id, &user.Name, &user.Email, &user.Password)
+		&user.Email, &user.Password)
 	return user, err
 
 }

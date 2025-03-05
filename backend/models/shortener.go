@@ -1,10 +1,10 @@
 package models
 
 type Shortener struct {
-	id string
-	siteName string
-	originalUrl string
-	newUrl string
-	views int 
-	userEmail string
+	Id          string
+	SiteName    string
+	OriginalUrl string
+	NewUrl      string
+	Views       int
+	UserEmail   string
 }
