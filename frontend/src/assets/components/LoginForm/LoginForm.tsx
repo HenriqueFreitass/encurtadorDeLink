@@ -8,7 +8,6 @@ function LoginForm() {
     password: "",
   });
 
-  // Atualiza os valores conforme o usuário digita
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -22,11 +21,10 @@ function LoginForm() {
     e.preventDefault(); // Impede recarregamento da página
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", formData);
+      const response = await axios.post("http://localhost:8080/users/login", formData);
 
       if (response.status === 200) {
         alert("Login realizado com sucesso!");
-        // Aqui você pode salvar o token ou redirecionar o usuário
       }
     } catch (error) {
       console.error("Erro no login:", error);
