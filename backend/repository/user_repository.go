@@ -28,7 +28,7 @@ func (r *UserRepository) CreateUser(u *models.Users) (*models.Users, error) {
 	query := "INSERT INTO Users(email, password, name) VALUES (?,?,?)"
 	result, err := r.db.Exec(query, u.Email, u.Password, u.Name)
 	if err != nil {
-		return nil, errors.New("Já existe um usuário com este email")
+		return nil, errors.New("já existe um usuário com este email")
 	}
 	id, err := result.LastInsertId()
 	if err != nil {
