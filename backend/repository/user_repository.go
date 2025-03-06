@@ -18,7 +18,7 @@ func (r *UserRepository) GetUserByID(Id int) (*models.Users, error) {
 
 	user := &models.Users{}
 	err := r.db.QueryRow("Select * FROM users WHERE id = ?", Id).Scan(
-		&user.Email, &user.Password)
+		&user.Email, &user.Password, &user.Id)
 	return user, err
 
 }
@@ -26,8 +26,8 @@ func (r *UserRepository) GetUserByID(Id int) (*models.Users, error) {
 func (r *UserRepository) GetUserByEmail(Email string) (*models.Users, error) {
 
 	user := &models.Users{}
-	err := r.db.QueryRow("Select email, password FROM users WHERE email = ?", Email).Scan(
-		&user.Email, &user.Password)
+	err := r.db.QueryRow("Select id, email, password FROM users WHERE email = ?", Email).Scan(
+		&user.Id, &user.Email, &user.Password)
 	return user, err
 
 }

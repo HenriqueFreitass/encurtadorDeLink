@@ -21,6 +21,7 @@ func (h *UserHandler) LoginUser(c *gin.Context) {
 	var loginRequest struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
+		Id       int    `json:"id"`
 	}
 
 	if err := c.ShouldBindJSON(&loginRequest); err != nil {

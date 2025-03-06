@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./LoginForm.css";
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,6 +28,9 @@ function LoginForm() {
 
       if (response.status === 200) {
         alert("Login realizado com sucesso!");
+        // console.log(response.data.user.Email) Email do usuário autentificado
+        localStorage.setItem('userId', response.data.user.Id);
+        navigate('/login'); 
       }
     } catch (error) {
       console.error("Erro no login:", error);
