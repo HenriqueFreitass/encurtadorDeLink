@@ -17,6 +17,28 @@ func NewUserHandler(UserService *service.UserService) *UserHandler {
 	return &UserHandler{userService: UserService}
 }
 
+func (h *UserHandler) LoginUser(c *gin.Context) {
+	var loginRequest struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := c.ShouldBindJSON(&loginRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Dados inválidos"})
+		return
+	}
+
+	// Tenta autenticar o usuário
+	user, err := h.userService.AuthenticateUser(loginRequest.Email, loginRequest.Password)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Email ou senha inválidos"})
+		return
+	}
+
+	// Aqui, você pode gerar um token JWT para o usuário, se desejar
+	c.JSON(http.StatusOK, gin.H{"message": "Login realizado com sucesso!", "user": user})
+}
+
 func (h *UserHandler) GetUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
