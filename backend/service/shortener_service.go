@@ -6,6 +6,10 @@ import (
 	"encurtador-de-link/backend/repository"
 	"fmt"
 	"net/url"
+	"strings"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type ShortenerService interface {
@@ -37,7 +41,18 @@ func extractSiteName(originalURL string) string {
 	if len(host) > 4 && host[:4] == "www." {
 		host = host[4:]
 	}
-	return host
+	// Separar o nome do domínio do ".com", ".org" etc.
+	parts := strings.Split(host, ".")
+
+	// Aqui, vamos pegar o primeiro componente do domínio, que normalmente é o nome do site.
+	siteName := parts[0]
+
+	// Capitalizar a primeira letra
+	// Capitaliza a primeira letra e deixa o restante minúsculo
+	caser := cases.Title(language.English) // Pode ser ajustado para outras linguagens
+	siteName = caser.String(siteName)
+	// Retorna o nome do site formatado
+	return siteName
 }
 
 func (s *NewShortenerService) ShortenURL(originalURL, userId string) (string, error) {
