@@ -6,5 +6,5 @@ type Shortener struct {
 	OriginalUrl string
 	NewUrl      string
 	Views       int
-	UserEmail   string
+	UserId      string
 }
