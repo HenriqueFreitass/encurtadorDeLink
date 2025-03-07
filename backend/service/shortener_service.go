@@ -67,10 +67,10 @@ func (s *NewShortenerService) ShortenURL(originalURL, userId string) (string, er
 
 	newURL := fmt.Sprintf("http://localhost:8080/%s", shortCode)
 
-	if !strings.Contains(originalURL, "://") {
+	if !strings.Contains(originalURL, "://") && !strings.Contains(originalURL, "www.") {
 		originalURL = "http://" + originalURL
 	}
-	
+
 	sitename := extractSiteName(originalURL)
 
 	views := 0
@@ -95,10 +95,6 @@ func (s *NewShortenerService) GetOriginalURL(id string) (string, error) {
 	parsedURL, err := url.Parse(originalURL)
 	if err != nil {
 		return "", err
-	}
-
-	if len(parsedURL.Host) > 4 && parsedURL.Host[:4] != "www." {
-		parsedURL.Host = "www." + parsedURL.Host
 	}
 
 	originalURL = parsedURL.String()
