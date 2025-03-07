@@ -18,6 +18,10 @@ func (s *UserService) GetUserProfile(userID int) (*models.Users, error) {
 	return s.userRepo.GetUserByID(userID)
 }
 
+func (s *UserService) DeleteLink(userID string) (string, error) {
+	return s.userRepo.DeleteLinkById(userID)
+}
+
 func (s *UserService) AuthenticateUser(email, password string) (*models.Users, error) {
 	// Buscar usuário no banco pelo email
 	user, err := s.userRepo.GetUserByEmail(email)

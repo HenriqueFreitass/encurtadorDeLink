@@ -7,10 +7,10 @@ type LinkBoxProps = {
     originalLink: string;
     newUrl: string;
     views: number;
+    onDelete: () => Promise<void>; // Definir a função onDelete como uma promise
 };
 
-
-function LinkBox({ siteName, originalLink, newUrl, views }: LinkBoxProps) {
+function LinkBox({ siteName, originalLink, newUrl, views, onDelete }: LinkBoxProps) {
     return (
         <div className="overflow-hidden bg-white min-w-[200px] h-full p-6 flex w-4/4 border-2 border-solkey justify-between rounded-md">
             <div className="informations flex flex-col">
@@ -22,13 +22,16 @@ function LinkBox({ siteName, originalLink, newUrl, views }: LinkBoxProps) {
                     {originalLink}
                 </a>
             </div>
-            <div className="actions flex flex-col items-end justify-between ">
-                <div className="delete-btn bg-red-500 text-white rounded-md size-7 flex justify-center items-center cursor-pointer">
+            <div className="actions flex flex-col items-end justify-between">
+                <div 
+                    className="delete-btn bg-red-500 text-white rounded-md size-7 flex justify-center items-center cursor-pointer"
+                    onClick={onDelete} // Chama a função onDelete ao clicar
+                >
                     <FontAwesomeIcon icon={faTrash} />
                 </div>
                 <div className="flex items-center">
-                    <span className='block mr-1'>{views}</span>
-                    <FontAwesomeIcon icon={faEye} className='block' />
+                    <span className="block mr-1">{views}</span>
+                    <FontAwesomeIcon icon={faEye} className="block" />
                 </div>
             </div>
         </div>

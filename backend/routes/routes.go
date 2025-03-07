@@ -12,6 +12,7 @@ func SetupUserRoutes(router *gin.Engine, userHandler *handlers.UserHandler, shor
 
 	userGroup := router.Group("/users")
 	{
+		userGroup.DELETE("/link/:id", userHandler.DeleteLink)
 		userGroup.GET("/link/:id", shortenerHandler.GetUserLinks)
 		userGroup.GET("/:id", userHandler.GetUser)
 		userGroup.POST("/", userHandler.CreateUser)

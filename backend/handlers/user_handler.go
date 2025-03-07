@@ -40,6 +40,18 @@ func (h *UserHandler) LoginUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Login realizado com sucesso!", "user": user})
 }
 
+func (h *UserHandler) DeleteLink(c *gin.Context) {
+	id := c.Param("id")
+
+	result, err := h.userService.DeleteLink(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Link not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": result})
+}
+
 func (h *UserHandler) GetUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

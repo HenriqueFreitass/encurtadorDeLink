@@ -21,6 +21,23 @@ func (r *UserRepository) GetUserByID(Id int) (*models.Users, error) {
 	return user, err
 
 }
+func (r *UserRepository) DeleteLinkById(Id string) (string, error) {
+	result, err := r.db.Exec("DELETE FROM Shortener WHERE id = ?", Id)
+	if err != nil {
+		return "Erro ao deletar", err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return "Erro ao verificar a quantidade de linhas afetadas", err
+	}
+
+	if rowsAffected == 0 {
+		return "Usuário não encontrado", nil
+	}
+
+	return "Deu Certo", nil
+}
 
 func (r *UserRepository) GetUserByEmail(Email string) (*models.Users, error) {
 

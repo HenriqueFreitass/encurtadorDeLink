@@ -27,6 +27,7 @@ function TxtEncurtar(){
                 ["url"]:"",
             });
             alert("Link criado com sucesso!");
+            window.location.reload();
             }
           } catch (error) {
             console.error("Erro no login:", error);
