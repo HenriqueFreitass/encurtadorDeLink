@@ -29,10 +29,6 @@ function Inicial() {
           Transforme links longos em URLs curtas e fáceis de compartilhar. Simples, rápido e eficiente!
         </p>
 
-        {/* Formulários ou outros componentes */}
-        {/* Exemplo: */}
-        {/* {showLogin && <LoginForm />} */}
-        {/* {showRegister && <CadastroForm />} */}
       </div>
       <div className="container mx-auto p-4">
         {showLogin && <LoginForm />}

@@ -1,0 +1,7 @@
+.delete-btn path{
+    fill: #fff;
+}
+
+svg[data-icon = "eye"] path{
+    fill: rgb(163, 51, 51);
+}

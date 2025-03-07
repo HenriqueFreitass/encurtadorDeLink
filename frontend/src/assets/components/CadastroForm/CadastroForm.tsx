@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./CadastroForm.css";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function CadastroForm() {
 
@@ -10,8 +11,10 @@ function CadastroForm() {
     Name: "",
   });
 
+    const navigate = useNavigate();
+    
   // Função para atualizar o estado quando os campos do formulário mudam
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -19,7 +22,7 @@ function CadastroForm() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault(); // Impede o comportamento padrão do formulário
   
     try {
@@ -27,9 +30,14 @@ function CadastroForm() {
       const response = await axios.post("http://localhost:8080/users/", formData);
   
       // Lida com a resposta do backend
-      if (response.status === 200) {
-        console.log("Resposta do servidor:", response.data);
+      if (response.status === 201) {
+        localStorage.setItem('userId', response.data.Id);
+        navigate('/login'); 
+
+      }else if( response.status === 500){
+        alert("Já existe um usuário cadastrado com esse email")
       }
+
     } catch (error) {
       console.error("Erro na requisição:", error);
     }

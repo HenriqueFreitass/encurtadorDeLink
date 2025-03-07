@@ -11,6 +11,7 @@ func SetupRoutes(router *gin.Engine, userHandler *handlers.UserHandler, shortene
 	{
 		userGroup.GET("/id", userHandler.GetUser)
 		userGroup.POST("/", userHandler.CreateUser)
+		userGroup.POST("/login", userHandler.LoginUser)
 		router.POST("/shorten", shortenerHandler.ShortenURL)
 		router.GET("/:id", shortenerHandler.RedirectURL)
 	}
