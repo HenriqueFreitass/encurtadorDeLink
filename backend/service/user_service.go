@@ -1,6 +1,8 @@
 package service
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encurtador-de-link/backend/models"
 	"encurtador-de-link/backend/repository"
 	"errors"
@@ -41,9 +43,17 @@ func (s *UserService) CreateUser(user *models.Users) (*models.Users, error) {
 	if user.Name == "" || user.Email == "" || user.Password == "" {
 		return nil, errors.New("algum dos campos não foi preenchido")
 	}
+	user.Password = HashPassword(user.Password)
 	createdUser, err := s.userRepo.CreateUser(user)
 	if err != nil {
 		return nil, err
 	}
 	return createdUser, nil
+}
+
+func HashPassword(password string) string {
+	hash := sha256.New()
+	hash.Write([]byte(password))
+	hashedPassword := hash.Sum(nil)
+	return hex.EncodeToString(hashedPassword) // Retorna o hash em formato hexadecimal
 }

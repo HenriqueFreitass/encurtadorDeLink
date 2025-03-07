@@ -2,14 +2,13 @@ package main
 
 import (
 	"database/sql"
-	"log"
-	"net/http"
-
 	"encurtador-de-link/backend/config"
 	"encurtador-de-link/backend/handlers"
 	"encurtador-de-link/backend/repository"
 	"encurtador-de-link/backend/routes"
 	"encurtador-de-link/backend/service"
+	"log"
+	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

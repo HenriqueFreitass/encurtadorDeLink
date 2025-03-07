@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encurtador-de-link/backend/models"
 	"encurtador-de-link/backend/service"
 	"net/http"
@@ -29,8 +31,12 @@ func (h *UserHandler) LoginUser(c *gin.Context) {
 		return
 	}
 
+	t := sha256.New()
+	t.Write([]byte(loginRequest.Password))
+	bs := t.Sum(nil)
+	hexString := hex.EncodeToString(bs)
 	// Tenta autenticar o usuário
-	user, err := h.userService.AuthenticateUser(loginRequest.Email, loginRequest.Password)
+	user, err := h.userService.AuthenticateUser(loginRequest.Email, hexString)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Email ou senha inválidos"})
 		return
