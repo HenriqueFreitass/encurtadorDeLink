@@ -6,10 +6,6 @@ import (
 	"net/http"
 
 	"encurtador-de-link/backend/config"
-	"encurtador-de-link/backend/handlers"
-	"encurtador-de-link/backend/repository"
-	"encurtador-de-link/backend/routes"
-	"encurtador-de-link/backend/service"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -28,9 +24,12 @@ func main() {
 	defer db.Close()
 
 	// Criar camadas da aplicação
-	userRepo := repository.NewUserRepository(db)
-	userService := service.NewUserService(userRepo)
-	userHandler := handlers.NewUserHandler(userService)
+	//userRepo := repository.NewUserRepository(db)
+	//userService := service.NewUserService(userRepo)
+	//userHandler := handlers.NewUserHandler(userService)
+	//shortenerRepo := repository.NewShortenerRepository(db)
+	//shortenerService := service.NewService(shortenerRepo)
+	//shortenerHandler := handlers.NewShortenerHandler(shortenerService) 
 
 	router := gin.Default()
 
@@ -43,7 +42,7 @@ func main() {
 	}))
 
 	// Configurar rotas
-	routes.SetupRoutes(router, userHandler)
+	//routes.SetupRoutes(router, userHandler, shortenerHandler)
 
 	router.Run(":8080")
 	// Iniciar servidor
