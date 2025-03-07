@@ -72,13 +72,19 @@ func (s *NewShortenerService) ShortenURL(originalURL, userId string) (string, er
 }
 
 func (s *NewShortenerService) GetOriginalURL(id string) (string, error) {
-	err := s.shortenerRepo.IncrementViews(id)
-	if err != nil {
-		return "", err
-	}
 	originalURL, err := s.shortenerRepo.GetOriginalURL(id)
 	if err != nil {
 		return "", err
 	}
+
+	if !strings.Contains(originalURL, "://") {
+		originalURL = "http://www." + originalURL
+	}
+
+	err = s.shortenerRepo.IncrementViews(id)
+	if err != nil {
+		return "", err
+	}
+	
 	return originalURL, nil
 }
