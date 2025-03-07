@@ -45,3 +45,17 @@ func (h *ShortenerHandler) RedirectURL(c *gin.Context) {
 
 	c.Redirect(302, originalURL)
 }
+
+func (h *ShortenerHandler) GetUserLinks(c *gin.Context) {
+	userId := c.Param("userId")
+
+	// Chama o serviço para obter os links do usuário
+	links, err := h.shortenerservice.GetUserLinks(userId)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Error fetching links"})
+		return
+	}
+
+	// Responde com os links do usuário
+	c.JSON(200, gin.H{"links": links})
+}

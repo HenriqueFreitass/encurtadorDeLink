@@ -3,6 +3,7 @@ package service
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"encurtador-de-link/backend/models"
 	"encurtador-de-link/backend/repository"
 	"fmt"
 	"net/url"
@@ -15,6 +16,7 @@ import (
 type ShortenerService interface {
 	ShortenURL(originalURL, userId string) (string, error)
 	GetOriginalURL(id string) (string, error)
+	GetUserLinks(userId string) ([]models.Shortener, error)
 }
 
 type NewShortenerService struct {
@@ -23,6 +25,14 @@ type NewShortenerService struct {
 
 func NewService(shortenerRepo repository.IShortenerRepository) ShortenerService {
 	return &NewShortenerService{shortenerRepo: shortenerRepo}
+}
+
+func (s *NewShortenerService) GetUserLinks(userId string) ([]models.Shortener, error) {
+	links, err := s.shortenerRepo.GetUserLinks(userId)
+	if err != nil {
+		return nil, err
+	}
+	return links, nil
 }
 
 func generateShortCode() string {
@@ -78,13 +88,24 @@ func (s *NewShortenerService) GetOriginalURL(id string) (string, error) {
 	}
 
 	if !strings.Contains(originalURL, "://") {
-		originalURL = "http://www." + originalURL
+		originalURL = "http://" + originalURL
 	}
+
+	parsedURL, err := url.Parse(originalURL)
+	if err != nil {
+		return "", err
+	}
+
+	if len(parsedURL.Host) > 4 && parsedURL.Host[:4] != "www." {
+		parsedURL.Host = "www." + parsedURL.Host
+	}
+
+	originalURL = parsedURL.String()
 
 	err = s.shortenerRepo.IncrementViews(id)
 	if err != nil {
 		return "", err
 	}
-	
+
 	return originalURL, nil
 }

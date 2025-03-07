@@ -9,6 +9,7 @@ import (
 func SetupUserRoutes(router *gin.Engine, userHandler *handlers.UserHandler, shortenerHandler *handlers.ShortenerHandler) {
 	router.GET("/:id", shortenerHandler.RedirectURL)
 	router.POST("/shorten", shortenerHandler.ShortenURL)
+	router.GET("/user/link", shortenerHandler.GetUserLinks)
 	userGroup := router.Group("/users")
 	{
 		userGroup.GET("/id", userHandler.GetUser)
