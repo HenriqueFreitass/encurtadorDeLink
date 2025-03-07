@@ -15,10 +15,9 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 }
 
 func (r *UserRepository) GetUserByID(Id int) (*models.Users, error) {
-
 	user := &models.Users{}
-	err := r.db.QueryRow("Select * FROM users WHERE id = ?", Id).Scan(
-		&user.Email, &user.Password, &user.Id)
+	err := r.db.QueryRow("Select name FROM users WHERE id = ?", Id).Scan(
+		&user.Name)
 	return user, err
 
 }

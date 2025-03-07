@@ -21,10 +21,12 @@ function TxtEncurtar(){
         if(newUrl.url != ""){
           try {
             const response = await axios.post("http://localhost:8080/shorten", newUrl);
-
             if (response.status === 200) {
-              alert("Link criado com sucesso!");
-              console.log(response.data)
+              setNewUrl({
+                ...newUrl,
+                ["url"]:"",
+            });
+            alert("Link criado com sucesso!");
             }
           } catch (error) {
             console.error("Erro no login:", error);

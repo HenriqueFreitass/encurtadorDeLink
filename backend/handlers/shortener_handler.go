@@ -47,7 +47,7 @@ func (h *ShortenerHandler) RedirectURL(c *gin.Context) {
 }
 
 func (h *ShortenerHandler) GetUserLinks(c *gin.Context) {
-	userId := c.Param("userId")
+	userId := c.Param("id")
 
 	// Chama o serviço para obter os links do usuário
 	links, err := h.shortenerservice.GetUserLinks(userId)
