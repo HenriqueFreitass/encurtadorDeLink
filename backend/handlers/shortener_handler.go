@@ -8,12 +8,12 @@ import (
 
 // Handler lida com as requisições HTTP
 type ShortenerHandler struct {
-	service service.NewShortenerService
+	shortenerservice service.ShortenerService
 }
 
 // NewHandler cria uma nova instância do handler
-func NewShortenerHandler(s service.NewShortenerService) *ShortenerHandler {
-	return &ShortenerHandler{service: s}
+func NewShortenerHandler(shortenerservice service.ShortenerService) *ShortenerHandler {
+	return &ShortenerHandler{shortenerservice: shortenerservice}
 }
 
 // ShortenURL lida com a requisição para encurtar uma URL
@@ -30,7 +30,7 @@ func (h *ShortenerHandler) ShortenURL(c *gin.Context) {
 	}
 
 	// Chama o serviço para encurtar a URL
-	shortCode, err := h.service.ShortenURL(body.OriginalURL, body.UserEmail)
+	shortCode, err := h.shortenerservice.ShortenURL(body.OriginalURL, body.UserEmail)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "Error saving URL"})
 		return
@@ -45,7 +45,7 @@ func (h *ShortenerHandler) RedirectURL(c *gin.Context) {
 	shortCode := c.Param("id")
 
 	// Chama o serviço para recuperar a URL original
-	originalURL, err := h.service.GetOriginalURL(shortCode)
+	originalURL, err := h.shortenerservice.GetOriginalURL(shortCode)
 	if err != nil {
 		c.JSON(404, gin.H{"error": "URL not found"})
 		return

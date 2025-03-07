@@ -15,18 +15,18 @@ type ShortenerService interface {
 }
 
 type NewShortenerService struct {
-	shortenerRepo repository.NewShortenerRepositoryy
+	shortenerRepo repository.IShortenerRepository
 }
 
 // NewService cria uma nova instância do serviço de encurtamento de URL
-func NewService(shortenerRepo repository.NewShortenerRepositoryy) ShortenerService {
+func NewService(shortenerRepo repository.IShortenerRepository) ShortenerService {
 	return &NewShortenerService{shortenerRepo: shortenerRepo}
 }
 
 // generateShortCode gera um código curto aleatório
 func generateShortCode() string {
-	b := make([]byte, 6) // Tamanho do código curto
-	rand.Read(b)         // Preenche com bytes aleatórios
+	b := make([]byte, 6)                            // Tamanho do código curto
+	rand.Read(b)                                    // Preenche com bytes aleatórios
 	return base64.URLEncoding.EncodeToString(b)[:6] // Retorna os primeiros 6 caracteres
 }
 

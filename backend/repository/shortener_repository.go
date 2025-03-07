@@ -6,7 +6,7 @@ import (
 )
 
 // Repository interface define os métodos de acesso a dados
-type NewShortenerRepositoryy interface {
+type IShortenerRepository interface {
 	SaveShortenedURL(id, sitename, originalURL, newURL string, views int, useremail string) error
 	GetOriginalURL(id string) (string, error)
 	IncrementViews(id string) error // Função para incrementar as visualizações
@@ -17,7 +17,7 @@ type ShortenerRepository struct {
 }
 
 // NewRepository cria uma nova instância do repositório MySQL
-func NewShortenerRepository(db *sql.DB) NewShortenerRepositoryy {
+func NewShortenerRepository(db *sql.DB) IShortenerRepository {
 	return &ShortenerRepository{db: db}
 }
 
