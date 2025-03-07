@@ -58,7 +58,7 @@ func extractSiteName(originalURL string) string {
 func (s *NewShortenerService) ShortenURL(originalURL, userId string) (string, error) {
 	shortCode := generateShortCode()
 
-	newURL := fmt.Sprintf("http://localhost:5173/%s", shortCode)
+	newURL := fmt.Sprintf("http://localhost:8080/%s", shortCode)
 
 	sitename := extractSiteName(originalURL)
 

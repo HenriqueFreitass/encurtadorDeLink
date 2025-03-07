@@ -17,26 +17,32 @@ function TxtEncurtar(){
       };
 
       const handleShortenLink = async () =>{
-        try {
-            const response = await axios.post("http://localhost:8080/users/shorten", newUrl);
+        console.log(newUrl)
+        if(newUrl.url != ""){
+          try {
+            const response = await axios.post("http://localhost:8080/shorten", newUrl);
 
             if (response.status === 200) {
-              alert("Login realizado com sucesso!");
+              alert("Link criado com sucesso!");
               console.log(response.data)
             }
           } catch (error) {
             console.error("Erro no login:", error);
-            alert("Email ou senha inválidos!");
+            alert("Erro ao criar o link encurtado");
           }
+        }else{
+          alert("Preencha o campo do link primeiramente")
+        }
+
       }
 
     return(
-        <div className="mt-4">
+        <div className="flex flex-col items-center m-auto mt-4 w-3/5 min-w-64">
             <p>Crie um novo link encurtado aqui</p>
-            <input type="text" name="url" id="url" placeholder="Link Encurtado" className="rounded-md pl-3 pr-3 pt-1 pb-1"
+            <input type="text" name="url" id="url" placeholder="Link Original" value={newUrl.url} className="w-3/4 mb-4 mt-4 rounded-md pl-3 pr-3 pt-1 pb-1"
             onChange={handleInputChange} />
-            <div className="bg-indigo-500 w-32 h-8"
-            onClick={handleShortenLink}></div>
+            <button className="bg-indigo-500 w-32 h-8 rounded-md text-white"
+            onClick={handleShortenLink}>Criar</button>
         </div>
 
     )

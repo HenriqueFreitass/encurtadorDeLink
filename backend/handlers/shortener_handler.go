@@ -31,7 +31,7 @@ func (h *ShortenerHandler) ShortenURL(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"short_url": "http://localhost:5173/" + shortCode})
+	c.JSON(200, gin.H{"short_url": "http://localhost:8080/" + shortCode})
 }
 
 func (h *ShortenerHandler) RedirectURL(c *gin.Context) {

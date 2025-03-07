@@ -46,7 +46,7 @@ func main() {
 	}))
 
 	// Configurar rotas
-	routes.SetupRoutes(router, userHandler, shortenerHandler)
+	routes.SetupUserRoutes(router, userHandler, shortenerHandler)
 
 	router.Run(":8080")
 	// Iniciar servidor
