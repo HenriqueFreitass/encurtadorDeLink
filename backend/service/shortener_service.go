@@ -51,17 +51,14 @@ func extractSiteName(originalURL string) string {
 	if len(host) > 4 && host[:4] == "www." {
 		host = host[4:]
 	}
-	// Separar o nome do domínio do ".com", ".org" etc.
+
 	parts := strings.Split(host, ".")
 
-	// Aqui, vamos pegar o primeiro componente do domínio, que normalmente é o nome do site.
 	siteName := parts[0]
 
-	// Capitalizar a primeira letra
-	// Capitaliza a primeira letra e deixa o restante minúsculo
-	caser := cases.Title(language.English) // Pode ser ajustado para outras linguagens
+	caser := cases.Title(language.English)
 	siteName = caser.String(siteName)
-	// Retorna o nome do site formatado
+
 	return siteName
 }
 
@@ -70,6 +67,10 @@ func (s *NewShortenerService) ShortenURL(originalURL, userId string) (string, er
 
 	newURL := fmt.Sprintf("http://localhost:8080/%s", shortCode)
 
+	if !strings.Contains(originalURL, "://") {
+		originalURL = "http://" + originalURL
+	}
+	
 	sitename := extractSiteName(originalURL)
 
 	views := 0
