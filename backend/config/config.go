@@ -46,3 +46,5 @@ func InitDB() *sql.DB {
 	log.Println("✅ Conexão com banco de dados estabelecida!")
 	return db
 }
+
+//teste goland
